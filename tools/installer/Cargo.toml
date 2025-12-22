@@ -1,0 +1,8 @@
+[package]
+name = "ferrisgen-installer"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dirs-next = "2"
+winreg = "0.10"

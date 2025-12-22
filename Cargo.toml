@@ -4,6 +4,7 @@ members = [
   "ferrisgen",
   "ferrisgen-cli",
   "ferrisgen-gui",
+  "tools/installer",
 ]
 
 

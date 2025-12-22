@@ -6,7 +6,7 @@ use ferrisgen::{generate, Options, estimate_entropy};
 fn main() -> eframe::Result<()> {
     let mut native = NativeOptions::default();
     native.initial_window_size = Some(egui::vec2(760.0, 420.0));
-    eframe::run_native("Password Generator", native, Box::new(|_cc| Box::new(AppState::default())))
+    eframe::run_native("FerrisGen", native, Box::new(|_cc| Box::new(AppState::default())))
 }
 
 struct AppState {
@@ -45,7 +45,7 @@ impl eframe::App for AppState {
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.add_space(6.0);
             ui.vertical_centered(|ui| {
-                ui.heading(egui::RichText::new("Password Generator").heading());
+                ui.heading(egui::RichText::new("FerrisGen").heading());
                 ui.add_space(6.0);
             });
 

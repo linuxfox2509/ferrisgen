@@ -71,7 +71,6 @@ cargo run -p ferrisgen-cli -- --length 12 -a
 
 Behavior notes:
 
-- Per your request, the generator will not use the following punctuation characters at all: `.` `,` `(` `)` `[` `]` `{` `}`. These are removed from the special character set.
 - When possible, generated passwords will not start with a special character; if only special characters are selected the generator will still produce a valid password (the first char may be special since no non-special characters are available).
 
 ## Testing
@@ -91,3 +90,66 @@ cargo test -p ferrisgen-cli
 ---
 
 Contributions and improvements welcome.
+
+## Build everything & Packaging (Windows)
+
+This repository includes a helper PowerShell script to build the release binaries (CLI, GUI, and installer) and package them into a single ZIP in `dist\` for distribution or manual download.
+
+Build all release artifacts (workspace-wide):
+
+```powershell
+# Build every workspace member in release mode
+cargo build --workspace --release
+
+# Or build only the items we package (faster)
+cargo build --release -p ferrisgen-cli -p ferrisgen-gui -p ferrisgen-installer
+```
+
+Package into a ZIP (Windows only):
+
+```powershell
+# From the workspace root
+> .\tools\package.ps1
+# Or explicitly (useful in CI)
+> powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\package.ps1
+```
+
+What the script does:
+- Builds the release binaries (if missing).
+- Copies `ferrisgen-cli.exe`, `ferrisgen-gui.exe`, and `ferrisgen-installer.exe` plus `README.md` and `LICENSE` into a temporary bundle.
+- Generates a `SHA256SUMS.txt` file inside the bundle with SHA-256 checksums for every included file.
+- Zips the bundle into `dist\FerrisGen-Windows-<timestamp>.zip` and writes a `<zipname>.sha256` file next to the ZIP containing the ZIP's SHA-256 checksum.
+
+Verify checksums locally (PowerShell):
+
+```powershell
+# Verify a file's SHA-256
+Get-FileHash -Algorithm SHA256 <path-to-file>
+
+# Verify ZIP SHA by comparing to the .sha256 file (or use certutil)
+certutil -hashfile <path-to-zip> SHA256
+```
+
+Using the bundle:
+- Users can run `ferrisgen-installer.exe` from the unzipped folder to perform an interactive install (choose install directory and components, add PATH and Start Menu shortcuts). The installer is Windows-only.
+- Or the user can simply run the binaries directly from the unzipped folder (no install required).
+
+---
+
+
+The script also generates checksums:
+
+- A `SHA256SUMS.txt` file is included inside the bundle listing SHA-256 checksums for every file in the bundle.
+- A `<zipname>.sha256` file is created in `dist\` containing the SHA-256 checksum of the ZIP file (useful for quick verification after download).
+
+Verify with PowerShell:
+
+```powershell
+Get-FileHash -Algorithm SHA256 <file>
+```
+
+Or using `certutil`:
+
+```powershell
+certutil -hashfile <file> SHA256
+```
