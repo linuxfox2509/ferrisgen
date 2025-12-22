@@ -1,0 +1,10 @@
+[package]
+name = "ferrisgen-gui"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+eframe = "0.22"
+ferrisgen = { path = "../ferrisgen" }
+arboard = "2.0"
+anyhow = "1.0"
