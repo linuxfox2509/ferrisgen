@@ -45,8 +45,8 @@ impl eframe::App for AppState {
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.add_space(6.0);
             ui.vertical_centered(|ui| {
-                ui.heading(egui::RichText::new("FerrisGen").heading());
-                ui.add_space(6.0);
+//                ui.heading(egui::RichText::new("FerrisGen").heading());
+//                ui.add_space(6.0);
             });
 
             egui::Frame::group(&ui.style()).show(ui, |ui| {
