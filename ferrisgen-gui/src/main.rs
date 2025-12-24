@@ -44,10 +44,10 @@ impl eframe::App for AppState {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.add_space(6.0);
-            ui.vertical_centered(|ui| {
+//            ui.vertical_centered(|ui| {
 //                ui.heading(egui::RichText::new("FerrisGen").heading());
 //                ui.add_space(6.0);
-            });
+//            });
 
             egui::Frame::group(&ui.style()).show(ui, |ui| {
                 ui.columns(2, |columns| {
